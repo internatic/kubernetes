@@ -1,0 +1,81 @@
+# Ubah semua teks 'apache2' sesuai kebutuhan anda, misal: web-server
+# Ubah 'httpd' pada image sesuai kebutuhan anda, misal: nginx
+# Ubah 'default' pada namespace sesuai namespace yang anda tentukan
+# Ubah 'cpu' dan 'memory' pada resources sesuai kebutuhan anda
+
+# Misal, deploy Apache2
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache2
+  namespace: default
+  labels:
+    k8s-app: apache2
+annotations:
+  description: apache2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: apache2
+  template:
+    metadata:
+      name: apache2
+      labels:
+        k8s-app: apache2
+    annotations:
+      description: apache2
+    spec:
+      containers:
+        - name: apache2
+          image: httpd
+          resources:
+            requests:
+              cpu: 1
+              memory: 1024Mi
+          securityContext:
+            privileged: true
+
+# Ubah semua teks 'mysql' sesuai kebutuhan anda, misal: web-server
+# Ubah 'mariadb' pada image sesuai kebutuhan anda, misal: nginx
+# Ubah 'default' pada namespace sesuai namespace yang anda tentukan
+# Ubah 'cpu' dan 'memory' pada resources sesuai kebutuhan anda
+# Ubah 'Your_MySQL_Password' pada envirotment value sesuai yang anda inginkan
+
+# Contoh deploy MYSQL
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: default
+  labels:
+    k8s-app: mysql
+annotations:
+  description: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: mysql
+  template:
+    metadata:
+      name: mysql
+      labels:
+        k8s-app: mysql
+    annotations:
+      description: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mariadb:latest
+          env:
+            - name: mysql_root_password
+              value: Your_MySQL_Password
+          resources:
+            requests:
+              cpu: 1
+              memory: 1024Mi
+          securityContext:
+            privileged: true
